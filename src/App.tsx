@@ -3,6 +3,7 @@ import "./styles/css/styles.css"
 import Banner from "./components/Banner"
 import NavBar from "./components/NavBar"
 import Row from "./components/Row"
+import TopRaytedRow from "./components/TopRaytedRow"
 
 import { Icon } from '@iconify/react';
 
@@ -57,6 +58,11 @@ function App() {
     "Popularne teraz",
     "Obejrzyj ponownie",
   ]
+
+  const TopRayted = [
+    "Top 10 seriali w Polsce dzisiaj",
+    "Top 10 seriali w Polsce dzisiaj",
+  ]
   
 
   return (
@@ -82,6 +88,26 @@ function App() {
                 </div>
               </div>
               <Row videosData={rawData}/>
+            </div>
+          ))
+        }
+        {
+          TopRayted.map((item, index)=>(
+            <div key={index}>
+              <div className="row-header">
+                <p className="row-header__title">{item}</p>
+                <div className="row-header__more">
+                  <p>Zobacz wszystkie</p>
+                  <Icon 
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                    }}
+                    icon="ic:round-keyboard-arrow-right" 
+                  />
+                </div>
+              </div>
+              <TopRaytedRow videosData={rawData}/>
             </div>
           ))
         }

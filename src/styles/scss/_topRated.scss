@@ -1,0 +1,94 @@
+@import 'varables';
+
+.topRated {
+  &-video{
+    display: flex;
+    flex-direction: row;
+    gap: 56px;
+
+    overflow: scroll;
+    margin: 16px 0 0 16px;
+    padding-right: 16px;
+
+    &-wraper{
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+
+      & p{
+        font-family: 'Space Grotesk';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 120px;
+        line-height: 100%;
+        /* or 120px */
+
+        display: flex;
+        align-items: flex-start;
+        letter-spacing: -0.01em;
+        color: rgb(0, 0, 0);
+        background-color: rgb(0, 0, 0);
+        text-shadow:
+        -1px -1px 0 $white-primary,
+         0   -1px 0 $white-primary,
+         1px -1px 0 $white-primary,
+         1px  0   0 $white-primary,
+         1px  1px 0 $white-primary,
+         0    1px 0 $white-primary,
+        -1px  1px 0 $white-primary,
+        -1px  0   0 $white-primary;
+
+      }
+
+      &:nth-child(1) p{
+        text-shadow:
+        -1px -1px 0 $topRated-Color1,
+         0   -1px 0 $topRated-Color1,
+         1px -1px 0 $topRated-Color1,
+         1px  0   0 $topRated-Color1,
+         1px  1px 0 $topRated-Color1,
+         0    1px 0 $topRated-Color1,
+        -1px  1px 0 $topRated-Color1,
+        -1px  0   0 $topRated-Color1;
+      }
+
+      &:nth-child(2) p{
+        text-shadow:
+        -1px -1px 0 $topRated-Color2,
+         0   -1px 0 $topRated-Color2,
+         1px -1px 0 $topRated-Color2,
+         1px  0   0 $topRated-Color2,
+         1px  1px 0 $topRated-Color2,
+         0    1px 0 $topRated-Color2,
+        -1px  1px 0 $topRated-Color2,
+        -1px  0   0 $topRated-Color2;
+      }
+
+      &:nth-child(3) p{
+        text-shadow:
+        -1px -1px 0 $topRated-Color3,
+         0   -1px 0 $topRated-Color3,
+         1px -1px 0 $topRated-Color3,
+         1px  0   0 $topRated-Color3,
+         1px  1px 0 $topRated-Color3,
+         0    1px 0 $topRated-Color3,
+        -1px  1px 0 $topRated-Color3,
+        -1px  0   0 $topRated-Color3;
+      }
+      
+    }
+
+    &__item{
+
+
+      & img{
+        width: 180px;
+        height: 224px;
+        border-radius: 16px;
+        object-fit: cover;
+      }
+    }
+
+  }
+
+}
