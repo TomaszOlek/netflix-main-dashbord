@@ -1,119 +1,84 @@
-import "./styles/css/styles.css"
+import "./styles/css/styles.css";
+import { useEffect } from "react";
 
-import Banner from "./components/Banner"
-import NavBar from "./components/NavBar"
-import Row from "./components/Row"
-import TopRaytedRow from "./components/TopRaytedRow"
+import Banner from "./components/Banner";
+import NavBar from "./components/NavBar";
+import Row from "./components/Row";
+import TopRaytedRow from "./components/TopRaytedRow";
+// @ts-ignore
+import { Icon } from "@iconify/react";
 
-import { Icon } from '@iconify/react';
-
-import breakingBad from "./assets/serials/breakingBad.png"
-import walkingDead from "./assets/serials/walkingDead.png"
-import Vikings from "./assets/serials/Vikings.png"
-import Lucifer from "./assets/serials/Lucifer.png"
-import PeakyBlinders from "./assets/serials/PeakyBlinders.png"
+import { useDispatch } from "react-redux";
+import { setWindowSize } from "./actions";
 
 function App() {
+  const dispatch = useDispatch();
 
-  const rawData = [
-    {
-      image: breakingBad,
-      name: "Breaking Bad",
-      lastWatched: "Pilot",
-      procentageWatched: 50,
-      lengthOfEpisode: 58,
-    },
-    {
-      image: walkingDead,
-      name: "Walking Dead",
-      lastWatched: "Days Gone Bye",
-      procentageWatched: 30,
-      lengthOfEpisode: 52,
-    },
-    {
-      image: Vikings,
-      name: "Vikings",
-      lastWatched: "Rites of Passage",
-      procentageWatched: 85,
-      lengthOfEpisode: 50,
-    },
-    {
-      image: Lucifer,
-      name: "Lucifer",
-      lastWatched: "Lucifer, Stay. Good Devil.",
-      procentageWatched: 20,
-      lengthOfEpisode: 48,
-    },
-    {
-      image: PeakyBlinders,
-      name: "Peaky Blinders",
-      lastWatched: "Episode 1",
-      procentageWatched: 90,
-      lengthOfEpisode: 56,
-    }
-  ]
+  useEffect(() => {
+    window.addEventListener("resize", () =>
+      dispatch(setWindowSize(window.innerWidth)),
+    );
+  }, []);
 
-  const Rows = [
-    "Docenione przez krytyków",
-    "Popularne teraz",
-    "Obejrzyj ponownie",
-  ]
-
-  const TopRayted = [
-    "Top 10 seriali w Polsce dzisiaj",
-    "Top 10 seriali w Polsce dzisiaj",
-  ]
-  
+  useEffect(() => {
+    dispatch(setWindowSize(window.innerWidth));
+  });
 
   return (
     <div className="App">
-      <NavBar/>
-      <Banner/>
+      <NavBar />
+      <Banner />
       <div className="row">
-
-        {
-          Rows.map( (item, index)=>(
-            <div key={index}>
-              <div className="row-header">
-                <p className="row-header__title">{item}</p>
-                <div className="row-header__more">
-                  <p>Zobacz wszystkie</p>
-                  <Icon 
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                    }}
-                    icon="ic:round-keyboard-arrow-right" 
-                  />
-                </div>
+        {Rows.map((item, index) => (
+          <div key={index}>
+            <div className="row-header">
+              <p className="row-header__title">{item}</p>
+              <div className="row-header__more">
+                <p>Zobacz wszystkie</p>
+                <Icon
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                  }}
+                  icon="ic:round-keyboard-arrow-right"
+                />
               </div>
-              <Row videosData={rawData}/>
             </div>
-          ))
-        }
-        {
-          TopRayted.map((item, index)=>(
-            <div key={index}>
-              <div className="row-header">
-                <p className="row-header__title">{item}</p>
-                <div className="row-header__more">
-                  <p>Zobacz wszystkie</p>
-                  <Icon 
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                    }}
-                    icon="ic:round-keyboard-arrow-right" 
-                  />
-                </div>
+            <Row index={index} />
+          </div>
+        ))}
+        {TopRayted.map((item, index) => (
+          <div key={index}>
+            <div className="row-header">
+              <p className="row-header__title">{item}</p>
+              <div className="row-header__more">
+                <p>Zobacz wszystkie</p>
+                <Icon
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                  }}
+                  icon="ic:round-keyboard-arrow-right"
+                />
               </div>
-              <TopRaytedRow videosData={rawData}/>
             </div>
-          ))
-        }
+            <TopRaytedRow index={index} />
+          </div>
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
+
+const Rows = [
+  "Docenione przez krytyków",
+  "Popularne teraz",
+  "Obejrzyj ponownie",
+];
+
+const TopRayted = [
+  "Top 10 seriali w Polsce dzisiaj",
+  "Top 10 seriali w Polsce dzisiaj",
+];

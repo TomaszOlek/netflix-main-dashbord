@@ -1,50 +1,45 @@
-import { useState, useLayoutEffect, useCallback, useRef, useEffect } from "react";
+import { useLayoutEffect, useCallback, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Icon } from '@iconify/react';
+// @ts-ignore
+import { Icon } from "@iconify/react";
 
-import Actions from "./Actions"
+import Actions from "./Actions";
 
-type videosData = {
-  image: string,
-  name: string,
-  lastWatched: string,
-  procentageWatched: number,
-  lengthOfEpisode: number,
-}
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../reducers";
+import {
+  createNewRow,
+  incrementedOffset,
+  decrementedOffset,
+  addItemsToRow,
+} from "../actions";
 
-function Row({ videosData }: { videosData: videosData[] }) {
-  const shuffled = [ ...videosData].sort(() => Math.random() - 0.5)
+function Row({ index }: { index: number }) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
 
-  const [width, setWidth] = useState<number>(window.innerWidth);
-  const [shuffledData, setShuffledData] = useState([...shuffled, ...shuffled, ...shuffled]);
-  const [index, setIndex] = useState(0);
-  const [isMoved, setIsMoved] = useState(0)
+  const width = useSelector((state: RootState) => state.windowSize);
+  const isMobile = width.windowSize <= 767;
 
-  const scroller = useRef<HTMLDivElement>(null)
-  const isMobile = width <= 767;
-
-  function handleWindowSizeChange() {
-      setWidth(window.innerWidth);
-  }
   useEffect(() => {
-      window.addEventListener('resize', handleWindowSizeChange);
-      return () => {
-          window.removeEventListener('resize', handleWindowSizeChange);
-      }
+    dispatch(createNewRow(`row${index}`));
   }, []);
 
+  const rowMoviesList = useSelector((state: RootState) =>
+    state.rowData[`row${index}`] ? state.rowData[`row${index}`].movies : [],
+  );
+  const rowMoviesOffset = useSelector(
+    (state: RootState) => state.rowOffset[`row${index}`] || 0,
+  );
+
+  console.log(rowMoviesList);
+
   const createSlider = useCallback(() => {
-    setShuffledData((prev) => [...prev, shuffledData[index]]);
-    if (index + 1 >= videosData.length) {
-      setIndex(0);
-    } else {
-      setIndex((prev) => prev + 1);
-    }
-  }, [index, shuffledData, setShuffledData, videosData.length]);
+    dispatch(addItemsToRow(`row${index}`));
+  }, []);
 
   useLayoutEffect(() => {
-
     gsap.registerPlugin(ScrollTrigger);
     let ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -53,72 +48,82 @@ function Row({ videosData }: { videosData: videosData[] }) {
         // markers: true,
         start: "left left",
         end: "right left",
-        onUpdate: (self) => {
+        onUpdate: self => {
           let progress = Number(self.progress.toFixed(2));
-          if (progress >= 0.6 && self.direction === 1) {
+          if (progress >= 0.12 && self.direction === 1) {
             createSlider();
             self.refresh();
           }
-        }
+        },
       });
     });
 
     return () => ctx.revert();
-
   }, [createSlider]);
 
   const handleClick = (direction: string) => {
-
-    const newIsMoved = direction === 'right' ? isMoved + 1 : isMoved - 1;
-    setIsMoved(newIsMoved)
-
-    if (scroller.current) {
-      const { scrollLeft, clientWidth } = scroller.current
-
-      setShuffledData(prev => [...prev, ...shuffled, ...shuffled])
-
-      const scrollTo =
-        direction === 'left'
-          ? scrollLeft - clientWidth
-          : scrollLeft + clientWidth
-      scroller.current.scrollTo({ left: scrollTo, behavior: 'smooth' })
+    if (direction === "left") {
+      dispatch(incrementedOffset(`row${index}`));
+    } else {
+      dispatch(decrementedOffset(`row${index}`));
     }
-  }
+    if (scroller.current) {
+      const { scrollLeft, clientWidth } = scroller.current;
+      // setShuffledData((prev) => [...prev, ...shuffled, ...shuffled]);
+      const scrollTo =
+        direction === "left"
+          ? scrollLeft - clientWidth
+          : scrollLeft + clientWidth;
+      scroller.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
+  };
 
   return (
     <div>
-        {(!isMobile && isMoved !== 0) &&
-          <div style={{ position: "relative"}} onClick={() => handleClick('left')}>
-            <div className="move-row-left">
-              <Icon icon="ic:outline-keyboard-arrow-left" style={{
+      {!isMobile && rowMoviesOffset !== 0 && (
+        <div
+          style={{ position: "relative" }}
+          onClick={() => handleClick("left")}
+        >
+          <div className="move-row-left">
+            <Icon
+              icon="ic:outline-keyboard-arrow-left"
+              style={{
                 width: "40px",
-                height: "40px"
-              }}/>
-            </div>
+                height: "40px",
+              }}
+            />
           </div>
-        }
-        <div className="row-video" ref={scroller}>
-        {shuffledData.map((videoData, index) => (
-            <div className="row-video-wraper" key={index}>
-              <div className="row-video__item">
-                <img src={videoData.image}/>
-              </div>
-              <Actions videoData={videoData} />
-            </div>
-        ))}
         </div>
-        {!isMobile &&
-          <div style={{ position: "relative"}} onClick={() => handleClick('right')}>
-            <div className="move-row-right">
-              <Icon icon="ic:twotone-keyboard-arrow-right" style={{
-                width: "40px",
-                height: "40px"
-              }}/>
+      )}
+      <div className="row-video" ref={scroller}>
+        {rowMoviesList.map((videoData, index) => (
+          <div className="row-video-wraper" key={index}>
+            <div className="row-video__item">
+              <img src={videoData.image} />
             </div>
+            <Actions videoData={videoData} />
           </div>
-        }
+        ))}
+      </div>
+      {!isMobile && (
+        <div
+          style={{ position: "relative" }}
+          onClick={() => handleClick("right")}
+        >
+          <div className="move-row-right">
+            <Icon
+              icon="ic:twotone-keyboard-arrow-right"
+              style={{
+                width: "40px",
+                height: "40px",
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default Row
+export default Row;
