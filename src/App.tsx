@@ -18,6 +18,12 @@ function App() {
     window.addEventListener("resize", () =>
       dispatch(setWindowSize(window.innerWidth)),
     );
+
+    return () => {
+      window.removeEventListener("resize", () =>
+        dispatch(setWindowSize(window.innerWidth)),
+      );
+    };
   }, []);
 
   useEffect(() => {
