@@ -1,119 +1,7 @@
 @import 'varables';
 
-.banner{
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  &__discription{
-    max-width: 20rem;
-    font-size: $font-size5;
-    font-weight: $medium;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-  }
-
-  &-buttons{
-    display: flex;
-    gap: 12px;
-
-    &__play{
-      background-color: $white-primary;
-    }
-
-    &__info{
-      background-color: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      color: $white-primary;
-    }
-  }
-
-  &__content{
-    position: absolute;
-    bottom: 56px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    padding: 16px;
-
-    & img{
-      width: 269px;
-      height: 70px;
-    }
-  }
-
-  &-toplist{
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    &__icon{
-      width: 32px;
-      height: 32px;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-radius: 7px;
-
-      background-color: $red-primary;
-
-      &> p:first-child{
-        font-size: 8px;
-        font-weight: $semibold;
-        margin: 0px;
-      }
-      &> p:last-child{
-        font-size: $font-size5;
-        font-weight: $semibold;
-        margin: 0px;
-      }
-    }
-  }
-
-  &__image {
-    position:relative;
-    display:inline-block;
-    top: 0;
-    left: 0;
-    z-index: -1;
-
-    height: 95vh;
-    width: 100vw;
-    overflow: hidden;
-
-    display: flex;
-    justify-content: center;
-
-    &:after {
-      content:'';
-      position:absolute;
-      left: 0; 
-      top: 0;
-      width: 100%;
-      height: 100%;
-      display: inline-block;
-      background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(212, 212, 212, 0) 25%), 
-              linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(232, 231, 231, 0) 20%);
-    }
-    
-
-    & img {
-      display: block;
-      width: 100%;
-      object-fit: cover;
-      z-index: -2;
-    }
-  }
-}
-
-
-.bannerButton{
+.bannerButton {
+  cursor: pointer;
   padding: 18px 16px;
   border-radius: 444px;
   border: none;
@@ -126,4 +14,239 @@
 
   font-weight: $semibold;
   font-size: $font-size3;
+
+  transition: all 0.3s;
+  user-select: none;
+}
+
+.banner {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__discription {
+    max-width: 20rem;
+    font-size: $font-size5;
+    font-weight: $medium;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  &-buttons {
+    display: flex;
+    gap: 12px;
+
+    &__play {
+      background-color: $white-primary;
+
+      &:hover {
+        background-color: $white-secondary;
+      }
+    }
+
+    &__info {
+      background-color: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      color: $white-primary;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3)
+      }
+    }
+  }
+
+  &__content {
+    position: absolute;
+    bottom: 56px;
+
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 16px;
+
+    & img {
+      width: 269px;
+      height: 70px;
+    }
+  }
+
+  &-toplist {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &__icon {
+      width: 32px;
+      height: 32px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 7px;
+
+      background-color: $red-primary;
+
+      user-select: none;
+
+      &>p:first-child {
+        font-size: 8px;
+        font-weight: $semibold;
+        margin: 0px;
+      }
+
+      &>p:last-child {
+        font-size: $font-size5;
+        font-weight: $semibold;
+        margin: 0px;
+      }
+    }
+  }
+
+  &__image {
+    position: relative;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    height: 95vh;
+    width: 100vw;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+
+    user-select: none;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: inline-block;
+      background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(212, 212, 212, 0) 25%),
+        linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(232, 231, 231, 0) 20%);
+    }
+
+
+    & img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+  }
+}
+
+// Tablet - 768 x 1024 
+@media (min-width: 768px) {
+
+  .banner {
+    height: 100vh;
+
+    &__discription {
+      max-width: 40rem;
+      font-size: $font-size2;
+    }
+
+    &-buttons {
+      gap: 16px;
+      margin-top: 25px;
+    }
+
+    &__content {
+      position: static;
+      margin-top: 30vh;
+
+      gap: 24px;
+
+      padding: 40px;
+
+      & img {
+        width: 425px;
+        height: 112px;
+      }
+    }
+
+    &-toplist {
+      &__icon {
+        width: 40px;
+        height: 40px;
+
+        &>p:first-child {
+          font-size: $font-size5;
+        }
+
+        &>p:last-child {
+          font-size: $font-size3;
+        }
+      }
+
+      & p {
+        font-weight: $bold;
+        font-size: $font-size1;
+      }
+    }
+
+    &__image {
+      height: 100vh;
+
+      &:after {
+        background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(212, 212, 212, 0) 30%),
+          linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(232, 231, 231, 0) 20%);
+      }
+    }
+  }
+
+  .bannerButton {
+    padding: 18px 40px;
+
+    font-weight: $semibold;
+    font-size: $font-size3;
+  }
+}
+
+@media (min-width: 1365px) {
+
+  .banner {
+    height: 90vh;
+
+    &__discription {
+      max-width: 535px;
+      font-size: $font-size2;
+    }
+
+    &-buttons {
+      gap: 16px;
+    }
+
+    &__content {
+      position: static;
+      margin-top: 150px;
+
+      padding: 64px;
+
+      & img {
+        width: 650px;
+        height: 172px;
+      }
+    }
+
+    &__image {
+      height: 95vh;
+      width: 100vw;
+
+      &:after {
+        background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(212, 212, 212, 0) 30%),
+          linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgba(232, 231, 231, 0) 20%);
+      }
+    }
+  }
 }

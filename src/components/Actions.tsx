@@ -8,7 +8,7 @@ type videoData = {
   lengthOfEpisode: number;
 };
 
-function Banner({ videoData }: { videoData: videoData }) {
+function Actions({ videoData }: { videoData: videoData }) {
   return (
     <div className="row-video-preview">
       <img src={videoData.image} />
@@ -76,4 +76,4 @@ function Banner({ videoData }: { videoData: videoData }) {
   );
 }
 
-export default Banner;
+export default Actions;

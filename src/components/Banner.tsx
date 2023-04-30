@@ -18,7 +18,7 @@ function Banner() {
           </div>
           <p>Nr 5 wśród seriali dzisiaj</p>
         </div>
-        <img src={bannerTitle} loading="lazy" />
+        <img src={bannerTitle} loading="lazy" style={{ userSelect: "none" }} />
         <p className="banner__discription">
           Makabrycznie bystra i sarkastyczna Wednesday Addams prowadzi śledztwo
           w sprawie serii zabójstw, przysparzając sobie nowych przyjaciół i

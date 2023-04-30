@@ -5,7 +5,7 @@ import Banner from "./components/Banner";
 import NavBar from "./components/NavBar";
 import Row from "./components/Row";
 import TopRaytedRow from "./components/TopRaytedRow";
-// @ts-ignore
+
 import { Icon } from "@iconify/react";
 
 import { useDispatch } from "react-redux";
@@ -39,7 +39,7 @@ function App() {
           <div key={index}>
             <div className="row-header">
               <p className="row-header__title">{item}</p>
-              <div className="row-header__more">
+              <a className="row-header__more" href="#">
                 <p>Zobacz wszystkie</p>
                 <Icon
                   style={{
@@ -48,7 +48,7 @@ function App() {
                   }}
                   icon="ic:round-keyboard-arrow-right"
                 />
-              </div>
+              </a>
             </div>
             <Row index={index} />
           </div>
@@ -57,7 +57,7 @@ function App() {
           <div key={index}>
             <div className="row-header">
               <p className="row-header__title">{item}</p>
-              <div className="row-header__more">
+              <a className="row-header__more" href="#">
                 <p>Zobacz wszystkie</p>
                 <Icon
                   style={{
@@ -66,7 +66,7 @@ function App() {
                   }}
                   icon="ic:round-keyboard-arrow-right"
                 />
-              </div>
+              </a>
             </div>
             <TopRaytedRow index={index} />
           </div>
@@ -85,6 +85,6 @@ const Rows = [
 ];
 
 const TopRayted = [
-  "Top 10 seriali w Polsce dzisiaj",
-  "Top 10 seriali w Polsce dzisiaj",
+  "Top 15 seriali w Polsce dzisiaj",
+  "Top 15 seriali w Polsce dzisiaj",
 ];
